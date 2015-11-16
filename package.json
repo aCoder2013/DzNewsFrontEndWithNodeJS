@@ -1,0 +1,21 @@
+{
+  "name": "dznewsfrontend",
+  "version": "1.0.0",
+  "description": "DzNews Front End With NodeJS ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "DznewsWithNodeJS"
+  },
+  "author": "acoder2013",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.3",
+    "body-parser":"*",
+    "multer":"*",
+    "connect":"*"
+  }
+}

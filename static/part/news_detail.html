@@ -1,0 +1,108 @@
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="intro-header" style="background-image: url('img/post-bg.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1>{{detail.title}}</h1>
+                        <span class="meta">Posted by {{detail.auth}} On {{detail.pubTime}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Post Content -->
+    <article>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                      <div id="news_detail_id" ng-bind-html='detail.content'></div>
+                </div>
+            </div>
+        </div>
+    </article>
+    <hr>
+    <!--Comment Content -->
+    <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+              <div class="row">
+                <form class="" method="post" name="comment_form">
+                  <div class="form-group" style="width:50%">
+                    <!--<label for="name" class="col-sm-2 control-label">昵称</label>-->
+                      <input type="text" class="form-control" id="name" placeholder="昵称"
+                        ng-minlength="3"
+                        ng-model="comment.name" required >
+                  </div>
+                  <div class="form-group" style="width:50%">
+                    <!--<label for="email" class="col-sm-2 control-label">邮箱</label>-->
+                      <input type="email" class="form-control" id="email" placeholder="邮箱"
+                      ng-minlength="6"
+                      ng-model="comment.email"
+                      required>
+                  </div>
+                  <div class="form-group" >
+                    <!--<label for="content" class="col-sm-2 control-label">内容</label>-->
+                    <textarea name="content" class="form-control" rows="3"
+                        placeholder="参与评论"
+                        ng-model="comment.content" required></textarea>
+                  </div>
+                  <!-- Button trigger modal -->
+                  <button type="button" class="btn btn-primary btn-block"  ng-disabled="comment_form.$invalid"  ng-click="submitComment(comment)">
+                    参与评论
+                  </button>
+                </form>
+              </div>
+              <hr>
+              <!--评论列表-->
+              <div class="row">
+                    <div class="">
+                        <h3 id="newest_comment_header"><strong>最新评论</strong></h3>
+                    </div><!--Comment Title-->
+                    <hr>
+                    <div class="words">
+                      <div class="media" ng-repeat="co in commentList">
+                        <div class="media-left">
+                          <a href="#">
+                            <img class="media-object comment-img" src="{{co.thumbnail}}" alt="头像">
+                          </a>
+                        </div>
+                        <div class="media-body cont">
+                          <a class="media-heading name">{{co.name}}</h4></a>
+                            :
+                            <span>{{co.content}}</span>
+                            <div class="time">
+                              <span>{{co.pub_time}}</span>
+                            </div>
+                        </div>
+                        <hr>
+                      </div><!--media-->
+                     </div>
+              </div>
+          </div>
+        </div>
+    </div><!--Comment Container-->
+    <style type="text/css">
+      #news_detail_id img,iframe,video{
+          max-width: 100%;
+          height: auto;
+          display: block;
+      }
+      #newest_comment_header{
+        color:#03A9F4;
+      }
+      .cont{color: #666666; font-size: 14px; padding-bottom: 10px;}
+      .name{color: #03A9F4; text-decoration: none;}
+      .comment-img{
+        width: 40px;
+        float: left;/* margin-right: 18px;*/
+      }
+      .time{font-size: 12px; color: #cccccc; height: 14px; line-height: 14px;}
+    </style>
+<!--
+    <script type="text/javascript">
+      $("#news_detail_id img").addClass("img-responsive");
+    </script> -->

@@ -1,0 +1,29 @@
+{
+  "name": "DzNewsFrontEndWithNodeJS",
+  "version": "0.0.0",
+  "authors": [
+    "aCoder2013"
+  ],
+  "description": "DzNews Front End Using NodeJS",
+  "main": "",
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.5",
+    "angular": "~1.4.7",
+    "angular-route": "~1.4.x",
+    "angular-resource": "~1.4.x",
+    "angular-animate": "~1.4.x",
+    "angular-ui-notification": "~0.0.14"
+  }
+}
