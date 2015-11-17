@@ -38,7 +38,7 @@ newsControllers.controller('newsListCtrl', function ($scope,$http,instance) {
 });
 
 //新闻详情页面Controller：newsDetailCtrl
-newsControllers.controller("newsDetailCtrl",function($scope, $routeParams,$http,$sce,instance,Notification) {
+newsControllers.controller("newsDetailCtrl",function($rootScope,$scope, $routeParams,$http,$sce,$location,instance,Notification) {
           if(!(instance.url)){
             //如果是直接通过url访问，则通过newsitem.id获取相应的新闻详情URL
             $http.get("/api/news/"+$routeParams.id).success(function (data) {
@@ -65,17 +65,20 @@ newsControllers.controller("newsDetailCtrl",function($scope, $routeParams,$http,
                 $scope.commentList = data;
             });
           };
-
+          
           //提交评论
-          $scope.submitComment = function (comment) {
-              if(!comment.name || !comment.email ||!comment.content){
-                  Notification.error({message: '错误 ！', positionX: 'center', positionY: 'bottom'});
+          $scope.submitComment = function (content) {
+              if(!$rootScope.me){
+                Notification.error({message: '需要登录后回复方可回复', positionX: 'center', positionY: 'bottom'});
+                $location.path('/login');
+                return;
+              }
+              if(!content){
+                  Notification.error({message: '内容为空 ！', positionX: 'center', positionY: 'bottom'});
                   return ;
               }
               $http.post(instance.url+'/comment/new', $.param({
-                name:comment.name,
-                email:comment.email,
-                content:comment.content
+                content:content
               }),{
                 headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
               }).success(function (data) {
@@ -83,4 +86,8 @@ newsControllers.controller("newsDetailCtrl",function($scope, $routeParams,$http,
                   $scope.commentList.push(data);
               });
           }
+});
+//login controller
+newsControllers.controller('loginCtrl',function ($scope) {
+
 });

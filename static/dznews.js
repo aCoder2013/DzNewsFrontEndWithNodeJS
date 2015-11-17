@@ -14,7 +14,6 @@ dznews.factory('instance', function(){
 
 dznews.config(['$routeProvider','$locationProvider',
     function($routeProvider,$locationProvider) {
-
         $routeProvider.
             when('/',{
               templateUrl: '/part/news_list.html',
@@ -27,6 +26,10 @@ dznews.config(['$routeProvider','$locationProvider',
             when('/news/:id', {
                 templateUrl: '/part/news_detail.html',
                 controller: 'newsDetailCtrl'
+            }).
+            when('/login',{
+                templateUrl: 'part/login.html',
+                controller:  'loginCtrl'
             }).
             otherwise({
                 redirectTo: '/news'
