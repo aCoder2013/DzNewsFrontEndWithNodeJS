@@ -9,10 +9,12 @@
                 <form action="" method="">
                   <div class="form_body" data-view="loginView">
                     <div class="input_item clearfix" data-propertyname="username" data-controltype="Phone" style="display: block;">
-                      <input type="text" class="input input_white" id="" name="" placeholder="请输入已验证手机/邮箱" data-required="required" autocomplete="off">
+                      <input type="text" class="input input_white" id="" name="" placeholder="请输入已验证邮箱" data-required="required" autocomplete="off"
+                        ng-model="user.email">
                     </div>
                     <div class="input_item clearfix" data-propertyname="password" data-controltype="Password" style="display: block;">
-                      <input type="password" class="input input_white" id="" name="" placeholder="请输入密码" data-required="required" autocomplete="off">
+                      <input type="password" class="input input_white" id="" name="" placeholder="请输入密码" data-required="required" autocomplete="off"
+                      ng-model="user.password">
                     </div>
                     <div class="input_item clearfix" data-propertyname="request_form_verifyCode" data-controltype="VerifyCode" style="display:none;">
                       <input type="text" class="input input_white fl" style="width:130px; display:block;" name="" placeholder="请输入验证码" data-required="required" autocomplete="off">
@@ -23,7 +25,7 @@
                       <a href="http://passport.lagou.com/accountPwd/toReset.html" class="forgot_pwd">忘记密码？</a>
                     </div>
                     <div class="input_item clearfix" data-propertyname="submit" data-controltype="Botton" style="display: block;">
-                      <input type="button" class="btn btn_green btn_active btn_block btn_lg" value="登&nbsp;录">
+                      <input type="button" class="btn btn_green btn_active btn_block btn_lg" value="登&nbsp;录" ng-click="userLogin(user)">
                     </div>
                     <div class="input_item clearfix">
                       <h5 class="reg_now">还没有帐号？<a href="/register">立即注册</a></h5>

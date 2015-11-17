@@ -89,16 +89,49 @@ router.post('/api/news/detail/:id/comment/new',function (req,res) {
 
 //注册新用户
 router.post('/api/user/register',function (req,res) {
-	console.log(req.body);
 	var postData =  querystring.stringify({
 		name : req.body.name,
 		email : req.body.email,
-		content : req.body.password
+		password : req.body.password
 	});
 	var options = {
 		hostname: 'localhost',
 		port: '8080',
 		path: '/api/user/register',
+		method: 'post',
+		headers: {
+			'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+			 'Content-Length': postData.length
+		}
+	};
+	var req = http.request(options,function (response) {
+		var body = "";
+		response.setEncoding('utf8');
+		response.on('data', function (chunk) {
+			body += chunk;
+		});
+		response.on('end', function() {
+			res.json(JSON.parse(body));
+		})
+		response.on('error', function(e) {
+		console.log('problem with request: ' + e.message);
+		});
+	});
+	req.write(postData);
+	req.end();
+});
+
+
+//用户登录
+router.post('/api/user/login',function (req,res) {
+	var postData =  querystring.stringify({
+		email : req.body.email,
+		password : req.body.password
+	});
+	var options = {
+		hostname: 'localhost',
+		port: '8080',
+		path: '/api/user/login',
 		method: 'post',
 		headers: {
 			'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',

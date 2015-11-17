@@ -88,8 +88,32 @@ newsControllers.controller("newsDetailCtrl",function($rootScope,$scope, $routePa
           }
 });
 //login controller
-newsControllers.controller('loginCtrl',function ($scope) {
-
+newsControllers.controller('loginCtrl',function ($rootScope,$scope,$http,$location,instance,Notification) {
+  $scope.userLogin = function (user) {
+    if(!user.password || !user.password){
+        Notification.error({message: '错误！', positionX: 'center', positionY: 'bottom'});
+        return ;
+    }
+    $http.post('/api/user/login',$.param({
+      email:user.email,
+      password:user.password
+    }),{
+      headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
+    }).success(function (data) {
+      if(data.code===0){
+        Notification.error({message: '邮箱或者密码输入错误！', positionX: 'center', positionY: 'bottom'});
+        $location.path('/login');
+        return;
+      }
+      $rootScope.me = data.msg;
+      Notification.success({message: '登陆成功', positionX: 'center', positionY: 'bottom'});
+      if(instance.url){
+        $location.path(instance.url);
+        return ;
+      }
+      $location.path('/');
+    });
+  };
 });
 
 
@@ -111,5 +135,5 @@ newsControllers.controller('regCtrl',function ($scope,$http,$location,Notificati
           Notification.success({message: '注册成功', positionX: 'center', positionY: 'bottom'});
           $location.path('/login');
       });
-    }
+    };
 });
