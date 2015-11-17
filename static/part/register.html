@@ -1,0 +1,43 @@
+<link rel="stylesheet" href="/styles/login.css" charset="utf-8">
+  <header class="sso_header">
+    <a href="#" class="logo"></a>
+  </header>
+  <section class="content_box cleafix">
+    <div class="row">
+        <div class="col-md-7">
+          <div class="left_area fl">
+            <form action="" method="">
+              <div class="form_body" data-view="loginView">
+                <div class="input_item clearfix" data-propertyname="username" data-controltype="Phone" style="display: block;">
+                  <input type="text" class="input input_white" id="" name="" placeholder="请输入已验证手机/邮箱" data-required="required" autocomplete="off">
+                </div>
+                <div class="input_item clearfix" data-propertyname="password" data-controltype="Password" style="display: block;">
+                  <input type="password" class="input input_white" id="" name="" placeholder="请输入密码" data-required="required" autocomplete="off">
+                </div>
+                <div class="input_item clearfix" data-propertyname="request_form_verifyCode" data-controltype="VerifyCode" style="display:none;">
+                  <input type="text" class="input input_white fl" style="width:130px; display:block;" name="" placeholder="请输入验证码" data-required="required" autocomplete="off">
+                  <img src="" alt="" class="yzm">
+                  <a href="javascript:;" class="reflash"></a>
+                </div>
+                <div class="input_item clearfix" data-propertyname="submit" data-controltype="Botton" style="display: block;">
+                  <input type="button" class="btn btn_green btn_active btn_block btn_lg" value="注&nbsp;册">
+                </div>
+
+                <input type="hidden" value="" id="isVisiable_request_form_verifyCode">
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="col-md-5">
+          <div class="right_area fl">
+            <h5>已经有账号?</h5>
+            <button type="button" class="btn btn_green btn_active btn_block btn_lg">
+              <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> 登陆
+            </button>
+          </div>
+        </div>
+    </div>
+
+
+  </section>

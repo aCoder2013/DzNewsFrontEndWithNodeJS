@@ -87,9 +87,6 @@ router.post('/api/news/detail/:id/comment/new',function (req,res) {
 	req.end();
 });
 
-router.get('/login',function (req,res) {
-	res.sendfile('./static/login.html');
-});
 
 //其他的全部转发到index.html，让Angular处理
 router.use(function (req,res) {
