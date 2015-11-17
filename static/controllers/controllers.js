@@ -78,6 +78,7 @@ newsControllers.controller("newsDetailCtrl",function($rootScope,$scope, $routePa
                   return ;
               }
               $http.post(instance.url+'/comment/new', $.param({
+                userid:$rootScope.me.id,
                 content:content
               }),{
                 headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
@@ -89,6 +90,10 @@ newsControllers.controller("newsDetailCtrl",function($rootScope,$scope, $routePa
 });
 //login controller
 newsControllers.controller('loginCtrl',function ($rootScope,$scope,$http,$location,instance,Notification) {
+
+  $rootScope.$on('login',function (evt,me) {
+    $rootScope.me = me;
+  });
   $scope.userLogin = function (user) {
     if(!user.password || !user.password){
         Notification.error({message: '错误！', positionX: 'center', positionY: 'bottom'});
@@ -105,7 +110,7 @@ newsControllers.controller('loginCtrl',function ($rootScope,$scope,$http,$locati
         $location.path('/login');
         return;
       }
-      $rootScope.me = data.msg;
+      $scope.$emit('login',data.msg);
       Notification.success({message: '登陆成功', positionX: 'center', positionY: 'bottom'});
       if(instance.url){
         $location.path(instance.url);

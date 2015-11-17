@@ -55,11 +55,10 @@ router.get('/api/news/detail/:id',function(req,res){
 router.post('/api/news/detail/:id/comment/new',function (req,res) {
 	var newsDetailId = req.params.id;
 	var postData =  querystring.stringify({
-		name : req.body.name,
-		email : req.body.email,
+		userid:req.body.userid,
 		content : req.body.content
 	});
-	console.log("POSTDATA : " +postData);
+	console.log(postData);
 	var options = {
 	  hostname: 'localhost',
 	  port: '8080',
