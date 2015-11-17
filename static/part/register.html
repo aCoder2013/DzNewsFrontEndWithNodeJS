@@ -6,16 +6,19 @@
     <div class="row">
         <div class="col-md-7">
           <div class="left_area fl">
-            <form action="" method="">
+            <form  method="post">
               <div class="form_body">
                 <div class="input_item clearfix"   style="display: block;">
-                  <input type="text" class="input input_white" id="username" name="username" placeholder="请输入昵称" data-required="required" autocomplete="off">
+                  <input type="text" class="input input_white" id="username" name="username" placeholder="请输入昵称" data-required="required" autocomplete="off"
+                    ng-model="user.name">
                 </div>
                 <div class="input_item clearfix"   style="display: block;">
-                  <input type="email" class="input input_white" id="email" name="email" placeholder="请输入邮箱" data-required="required" autocomplete="off">
+                  <input type="email" class="input input_white" id="email" name="email" placeholder="请输入邮箱" data-required="required" autocomplete="off"
+                    ng-model="user.email">
                 </div>
                 <div class="input_item clearfix"  style="display: block;">
-                  <input type="password" class="input input_white" id="password" name="password" placeholder="请输入密码" data-required="required" autocomplete="off">
+                  <input type="password" class="input input_white" id="password" name="password" placeholder="请输入密码" data-required="required" autocomplete="off"
+                    ng-model="user.password">
                 </div>
                 <div class="input_item clearfix" data-propertyname="request_form_verifyCode" data-controltype="VerifyCode" style="display:none;">
                   <input type="text" class="input input_white fl" style="width:130px; display:block;" name="" placeholder="请输入验证码" data-required="required" autocomplete="off">
@@ -23,7 +26,8 @@
                   <a href="javascript:;" class="reflash"></a>
                 </div>
                 <div class="input_item clearfix" data-propertyname="submit" data-controltype="Botton" style="display: block;">
-                  <input type="button" class="btn btn_green btn_active btn_block btn_lg" value="注&nbsp;册">
+                  <input type="submit" class="btn btn_green btn_active btn_block btn_lg"
+                      ng-click="subminRegInfo(user)" value="注&nbsp;册">
                 </div>
 
                 <input type="hidden" value="" id="isVisiable_request_form_verifyCode">

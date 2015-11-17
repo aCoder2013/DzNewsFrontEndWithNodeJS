@@ -65,7 +65,7 @@ newsControllers.controller("newsDetailCtrl",function($rootScope,$scope, $routePa
                 $scope.commentList = data;
             });
           };
-          
+
           //提交评论
           $scope.submitComment = function (content) {
               if(!$rootScope.me){
@@ -90,4 +90,26 @@ newsControllers.controller("newsDetailCtrl",function($rootScope,$scope, $routePa
 //login controller
 newsControllers.controller('loginCtrl',function ($scope) {
 
+});
+
+
+//register Controller
+newsControllers.controller('regCtrl',function ($scope,$http,$location,Notification) {
+    //注册
+    $scope.subminRegInfo = function (user) {
+      if(!user.name || !user.password || !user.password){
+          Notification.error({message: '错误！', positionX: 'center', positionY: 'bottom'});
+          return ;
+      }
+      $http.post('/api/user/register',$.param({
+          name:user.name,
+          email:user.email,
+          password:user.password
+      }),{
+        headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
+      }).success(function (data) {
+          Notification.success({message: '注册成功', positionX: 'center', positionY: 'bottom'});
+          $location.path('/login');
+      });
+    }
 });

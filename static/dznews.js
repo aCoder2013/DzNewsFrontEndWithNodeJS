@@ -32,7 +32,8 @@ dznews.config(['$routeProvider','$locationProvider',
                 controller:  'loginCtrl'
             }).
             when('/register',{
-                templateUrl: 'part/register.html'
+                templateUrl: 'part/register.html',
+                controller:  'regCtrl'
             }).
             otherwise({
                 redirectTo: '/news'

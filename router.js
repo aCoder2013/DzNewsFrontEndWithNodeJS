@@ -87,11 +87,47 @@ router.post('/api/news/detail/:id/comment/new',function (req,res) {
 	req.end();
 });
 
+//注册新用户
+router.post('/api/user/register',function (req,res) {
+	console.log(req.body);
+	var postData =  querystring.stringify({
+		name : req.body.name,
+		email : req.body.email,
+		content : req.body.password
+	});
+	var options = {
+		hostname: 'localhost',
+		port: '8080',
+		path: '/api/user/register',
+		method: 'post',
+		headers: {
+			'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+			 'Content-Length': postData.length
+		}
+	};
+	var req = http.request(options,function (response) {
+		var body = "";
+		response.setEncoding('utf8');
+		response.on('data', function (chunk) {
+			body += chunk;
+		});
+		response.on('end', function() {
+			res.json(JSON.parse(body));
+		})
+		response.on('error', function(e) {
+		console.log('problem with request: ' + e.message);
+		});
+	});
+	req.write(postData);
+	req.end();
+});
 
 //其他的全部转发到index.html，让Angular处理
 router.use(function (req,res) {
 	res.sendfile('./static/index.html');
 });
+
+
 
 //向后端服务器发送GET请求，调用callback回调方法
 var getFromServer = function (path,callback) {
