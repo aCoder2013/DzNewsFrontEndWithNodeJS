@@ -12,6 +12,8 @@ dznews.factory('instance', function(){
 });
 
 
+
+//Core Router
 dznews.config(['$routeProvider','$locationProvider',
     function($routeProvider,$locationProvider) {
         $routeProvider.
@@ -41,3 +43,29 @@ dznews.config(['$routeProvider','$locationProvider',
             // use the HTML5 History API
             $locationProvider.html5Mode(true);
     }]);
+    dznews.config(function(NotificationProvider) {
+        NotificationProvider.setOptions({
+            delay: 1000,
+            startTop: 20,
+            startRight: 10,
+            verticalSpacing: 20,
+            horizontalSpacing: 20,
+            positionX: 'left',
+            positionY: 'bottom'
+        });
+    });
+
+    //Run Block
+    dznews.run(function ($window,$rootScope,$http,$location,Notification) {
+      $rootScope.logout = function () {
+        $http.get('/api/user/logout').success(function (data) {
+          Notification.success({message: '注销成功', positionX: 'center', positionY: 'bottom'});
+          $rootScope.me = null;
+          $location.path('/');
+        });
+      };
+
+      $rootScope.$on('login',function (evt,me) {
+        $rootScope.me = me;
+      });
+    });

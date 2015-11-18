@@ -4,7 +4,7 @@ var http  = require('http');
 var querystring = require('querystring');
 
 
-
+//从服务器取得新闻数据
 router.get('/api/news',function (req,res) {
 	//得到相关查询参数
 	var page = req.query.page;
@@ -124,10 +124,13 @@ router.post('/api/user/register',function (req,res) {
 router.get('/api/validate',function (req,res) {
 	var sess = req.session;
 	if(sess._userId){
-		getFromServer('/api/user/'+sess._userId,function (data) {
-				return res.json(data);
+		console.log(sess._userId);
+			console.log('已经登陆');
+			getFromServer('/api/user/'+sess._userId,function (data) {
+			return res.json(data);
 		});
 	}else{
+		console.log('未登陆！');
 		return res.json(401,{msg:'error'});
 	}
 });
@@ -166,6 +169,15 @@ router.post('/api/user/login',function (req,res) {
 	});
 	req.write(postData);
 	req.end();
+});
+
+//注销
+router.get('/api/user/logout',function (req,res) {
+	 var sess = req.session;
+	 sess.destroy(req.sessionID,function (err) {
+	 		console.log("problem with  session destory :"+err);
+	 });
+	 res.json('success');
 });
 
 //其他的全部转发到index.html，让Angular处理

@@ -93,12 +93,9 @@ newsControllers.controller("newsDetailCtrl",function($rootScope,$scope, $routePa
               });
           }
 });
+
 //login controller
 newsControllers.controller('loginCtrl',function ($rootScope,$scope,$http,$location,instance,Notification) {
-
-  $rootScope.$on('login',function (evt,me) {
-    $rootScope.me = me;
-  });
   $scope.userLogin = function (user) {
     if(!user.password || !user.password){
         Notification.error({message: '错误！', positionX: 'center', positionY: 'bottom'});
@@ -110,7 +107,8 @@ newsControllers.controller('loginCtrl',function ($rootScope,$scope,$http,$locati
     }),{
       headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
     }).success(function (data) {
-      if(data.code===0){
+      data = JSON.parse(data);
+      if(data.code==0){
         Notification.error({message: '邮箱或者密码输入错误！', positionX: 'center', positionY: 'bottom'});
         $location.path('/login');
         return;
