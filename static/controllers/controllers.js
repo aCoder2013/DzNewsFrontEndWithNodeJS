@@ -68,23 +68,28 @@ newsControllers.controller("newsDetailCtrl",function($rootScope,$scope, $routePa
 
           //提交评论
           $scope.submitComment = function (content) {
-              if(!$rootScope.me){
-                Notification.error({message: '需要登录后回复方可回复', positionX: 'center', positionY: 'bottom'});
+              $http.get('/api/validate').success(function (data) {
+                if(!$rootScope.me){
+                  $scope.$emit('login',data);
+                }
+                if(!content){
+                    Notification.error({message: '内容为空 ！', positionX: 'center', positionY: 'bottom'});
+                    return ;
+                }
+                user = JSON.parse(data);
+                $http.post(instance.url+'/comment/new', $.param({
+                  userid:user.id,
+                  content:content
+                }),{
+                  headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
+                }).success(function (data) {
+                    Notification.success({message: '评论成功', positionX: 'center', positionY: 'bottom'});
+                    $scope.commentList.push(data);
+                });
+              }).error(function (data) {
+                Notification.error({message: '需要登录后方可回复', positionX: 'center', positionY: 'bottom'});
                 $location.path('/login');
                 return;
-              }
-              if(!content){
-                  Notification.error({message: '内容为空 ！', positionX: 'center', positionY: 'bottom'});
-                  return ;
-              }
-              $http.post(instance.url+'/comment/new', $.param({
-                userid:$rootScope.me.id,
-                content:content
-              }),{
-                headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
-              }).success(function (data) {
-                  Notification.success({message: '评论成功', positionX: 'center', positionY: 'bottom'});
-                  $scope.commentList.push(data);
               });
           }
 });

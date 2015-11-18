@@ -58,7 +58,6 @@ router.post('/api/news/detail/:id/comment/new',function (req,res) {
 		userid:req.body.userid,
 		content : req.body.content
 	});
-	console.log(postData);
 	var options = {
 	  hostname: 'localhost',
 	  port: '8080',
@@ -121,8 +120,21 @@ router.post('/api/user/register',function (req,res) {
 });
 
 
+//验证用户是否登陆
+router.get('/api/validate',function (req,res) {
+	var sess = req.session;
+	if(sess._userId){
+		getFromServer('/api/user/'+sess._userId,function (data) {
+				return res.json(data);
+		});
+	}else{
+		return res.json(401,{msg:'error'});
+	}
+});
+
 //用户登录
 router.post('/api/user/login',function (req,res) {
+	var sess  = req.session;
 	var postData =  querystring.stringify({
 		email : req.body.email,
 		password : req.body.password
@@ -144,7 +156,9 @@ router.post('/api/user/login',function (req,res) {
 			body += chunk;
 		});
 		response.on('end', function() {
-			res.json(JSON.parse(body));
+				data = JSON.parse(body);
+				sess._userId= data.msg.id;//设置session
+				res.json(body);
 		})
 		response.on('error', function(e) {
 		console.log('problem with request: ' + e.message);

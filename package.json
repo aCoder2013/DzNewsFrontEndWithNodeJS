@@ -13,9 +13,11 @@
   "author": "acoder2013",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "*",
+    "connect": "*",
+    "connect-redis": "^3.0.1",
     "express": "^4.13.3",
-    "body-parser":"*",
-    "multer":"*",
-    "connect":"*"
+    "express-session": "^1.12.1",
+    "multer": "*"
   }
 }
