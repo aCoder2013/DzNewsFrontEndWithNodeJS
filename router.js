@@ -109,10 +109,15 @@ router.post('/api/user/register',function (req,res) {
 			body += chunk;
 		});
 		response.on('end', function() {
-			res.json(JSON.parse(body));
+			body = JSON.parse(body);
+			if(body.meta.success === false){
+				res.status(401).json({msg:body.meta.message});
+				return;
+			}
+			res.json(body);
 		})
 		response.on('error', function(e) {
-		console.log('problem with request: ' + e.message);
+			console.log('problem with request: ' + e.message);
 		});
 	});
 	req.write(postData);
@@ -125,12 +130,10 @@ router.get('/api/validate',function (req,res) {
 	var sess = req.session;
 	if(sess._userId){
 		console.log(sess._userId);
-			console.log('已经登陆');
 			getFromServer('/api/user/'+sess._userId,function (data) {
 			return res.json(data);
 		});
 	}else{
-		console.log('未登陆！');
 		return res.json(401,{msg:'error'});
 	}
 });
@@ -159,12 +162,16 @@ router.post('/api/user/login',function (req,res) {
 			body += chunk;
 		});
 		response.on('end', function() {
-				data = JSON.parse(body);
-				sess._userId= data.msg.id;//设置session
-				res.json(body);
+				var json_body  = JSON.parse(body);
+				if(json_body.meta.success === false){
+					res.status(401).json({msg:json_body.meta.message});
+					return;
+				}
+				sess._userId= json_body.data.id;//设置session
+				res.json(body.data);
 		})
 		response.on('error', function(e) {
-		console.log('problem with request: ' + e.message);
+			console.log('problem with request: ' + e.message);
 		});
 	});
 	req.write(postData);

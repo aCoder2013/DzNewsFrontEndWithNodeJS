@@ -9,6 +9,7 @@ var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
 var router = require('./router.js');
 
+
 app.use(session({
     store: new RedisStore({
       host:'localhost',

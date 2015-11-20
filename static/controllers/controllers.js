@@ -107,19 +107,20 @@ newsControllers.controller('loginCtrl',function ($rootScope,$scope,$http,$locati
     }),{
       headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
     }).success(function (data) {
-      data = JSON.parse(data);
-      if(data.code==0){
-        Notification.error({message: '邮箱或者密码输入错误！', positionX: 'center', positionY: 'bottom'});
-        $location.path('/login');
-        return;
-      }
-      $scope.$emit('login',data.msg);
+      $scope.$emit('login',data);
       Notification.success({message: '登陆成功', positionX: 'center', positionY: 'bottom'});
+      //如果instance.url存在，则跳转到相应的新闻详情页面
       if(instance.url){
         $location.path(instance.url);
         return ;
       }
+      //否则跳转到主页
       $location.path('/');
+    }).error(function(error){
+        //显示错误信息，跳转到登陆页面
+        Notification.error({message: error.msg, positionX: 'center', positionY: 'bottom'});
+        $location.path('/login');
+        return;
     });
   };
 });
@@ -142,6 +143,8 @@ newsControllers.controller('regCtrl',function ($scope,$http,$location,Notificati
       }).success(function (data) {
           Notification.success({message: '注册成功', positionX: 'center', positionY: 'bottom'});
           $location.path('/login');
+      }).error(function(error){
+          Notification.success({message: error.msg, positionX: 'center', positionY: 'bottom'});
       });
     };
 });
